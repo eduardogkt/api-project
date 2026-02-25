@@ -9,13 +9,19 @@
   </p>
   <% } %>
 
-  <div>
-    <% event.wikipedia.forEach((article) => { %>
-    <a href=<%= article.wikipedia %>>
+  <div class="results-articles">
+    <span>Wikipedia articles: </span>
+    <% event.wikipedia.forEach((article, idx) => { %>
+    <% if (idx !== 0) { %>
+    <span>/</span>
+    <% }  %>
+    <a href=<%= article.wikipedia %> class="article-link">
       <p><%= article.title %></p>
     </a>
     <% }) %>
   </div>
+
+  <hr />
 
   <% }) %>
 </div>

@@ -2,53 +2,65 @@
 <html lang="en">
 <%- include("partials/head.ejs") %>
 
-<body class="vh-100 flex flex-column justify-content-between">
-  <div class="container d-flex flex-column align-items-start justify-content center h-100">
-    <div class="hero">
-      <h1>On this day</h1>
-      <p>Search for what happened on this day</p>
-      <p>This shows wikipedia articles of events that happened on the searched day</p>
-    </div>
+<body>
+  <div class="min-vh-100 d-flex flex-column justify-content-between">
 
-    <form method="post" action="/search" class="form">
-      <input type="number" name="month" required min="1" max="12" placeholder="month" class="form-date" />
-      <input type="number" name="day" required min="1" max="31" placeholder="day" class="form-date" />
-      <input type="submit" value="submit" class="form-btn" />
-
-      <div class="filters">
-        <label for="sort">Sort by:</label>
-        <select name="sort">
-          <option value="oldest">Oldest</option>
-          <option value="newest">Newest</option>
-        </select>
-
-        <label for="type">Type:</label>
-        <select name="type">
-          <option value="events">Events</option>
-          <option value="births">Births</option>
-          <option value="deaths">Deaths</option>
-        </select>
+    <div class="container wrapper">
+      <div class="hero row-auto">
+        <h1>On this day.</h1>
+        <p>Find wikipedia articles of events, births and deaths that happened on a specific day.</p>
       </div>
-    </form>
 
-    <div class="results">
-      <% if (locals.date && locals.events) { %>
-      <h2>On <%= date %>:</h2>
+      <form method="post" action="/search" class="form row-auto justify-content-space-between">
+        <div class="query">
+          <div class="form-date">
+            <input type="number" name="month" required min="1" max="12" placeholder="month" class="date" id="month" />
+            <span>/</span>
+            <input type="number" name="day" required min="1" max="31" placeholder="day" class="date" id="day" />
+          </div>
+          <input type="submit" value="search" class="form-btn" />
+        </div>
 
-      <% if (locals.filters) { %>
-      <p>(<%= filters.type %>, <%= filters.sort %>)</p>
-      <% } %>
+        <div class="filters">
+          <div class="filter">
+            <select name="sort" class="form-select">
+              <option value="oldest">Sort by Oldest</option>
+              <option value="newest">Sort by Newest</option>
+            </select>
+          </div>
 
-      <!-- show the query results -->
-      <%- include("partials/results.ejs", {events : events}) %>
+          <div class="filter">
+            <select name="type" class="form-select">
+              <option value="events">Search for Events</option>
+              <option value="births">Search for Births</option>
+              <option value="deaths">Search for Deaths</option>
+            </select>
+          </div>
+        </div>
+      </form>
 
-      <% } else if (locals.date) { %>
-      <h2>No results found.</h2>
-      <% } %>
+      <div class="results row-auto">
+        <% if (locals.date && locals.events) { %>
+        <h2 class="results-query">On <%= date %>:</h2>
+
+        <% if (locals.filters) { %>
+        <p class="results-filters">(<%= filters.type %>, <%= filters.sort %>)</p>
+        <% } %>
+
+        <hr />
+
+        <!-- show the query results -->
+        <%- include("partials/results.ejs", {events : events}) %>
+
+        <% } else if (locals.date) { %>
+        <h2>No results found.</h2>
+        <% } %>
+      </div>
     </div>
+    <%- include("partials/footer.ejs") %>
   </div>
-  <%- include("partials/footer.ejs") %>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
 </html>

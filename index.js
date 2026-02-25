@@ -12,7 +12,7 @@ const limiter = rateLimit({
 const apiUrl = "https://byabbe.se/on-this-day/";
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(limiter);
+// app.use(limiter);
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
