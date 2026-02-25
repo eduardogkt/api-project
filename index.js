@@ -33,6 +33,7 @@ app.post("/search", async (req, res) => {
             date: result.data.date,
             events: events,
             filters: { type, sort },
+            query: { day, month },
         });
     } catch (error) {
         console.error("Erro ao buscar eventos:", error.message);
