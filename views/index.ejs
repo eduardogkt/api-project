@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <%- include("partials/head.ejs") %>
-  <body>
-    <div class="container d-flex flex-column align-items-start justify-content center">
+  <body class="vh-100 flex flex-column justify-content-between">
+    <div class="container d-flex flex-column align-items-start justify-content center h-100">
       <div class="hero">
         <h1>On this day</h1>
         <p>Search for what happened on this day</p>
@@ -20,9 +20,9 @@
             <option value="oldest">Oldest</option>
             <option value="newest">Newest</option>
           </select>
-          
+
           <label for="type">Type:</label>
-          <select name="sort">
+          <select name="type">
             <option value="events">Events</option>
             <option value="births">Births</option>
             <option value="deaths">Deaths</option>
@@ -33,12 +33,17 @@
       <div class="results">
       <% if (locals.date && locals.events) { %>
         <h2>On <%= date %>:</h2>
+        <% if (locals.filters) { %>
+          <p>(<%= filters.type %>, <%= filters.sort %>)</p>
+        <% } %>
         <div class="results-list">
           <% events.forEach((event) => { %>
             <h3 class="results-title"><%= event.year %></h3>
-            <p class="results-description">
-              <%= event.description %>
-            </p>
+            <% if (typeof event.description !== undefined) { %>
+              <p class="results-description">
+                <%= event.description %>
+              </p>
+            <% } %>
             <div>
               <% event.wikipedia.forEach((article) => { %>
                 <a href=<%= article.wikipedia %>>
@@ -48,7 +53,7 @@
             </div>
           <% }) %>
         </div>
-      <% } else if (locals.date && locals.events.length === 0) { %>
+      <% } else if (locals.date) { %>
         <h2>No results found.</h2>        
       <% } %>
       </div>
