@@ -1,0 +1,21 @@
+<div class="results-list">
+
+  <% events.forEach((event) => { %>
+  <h3 class="results-title"><%= event.year %></h3>
+
+  <% if (typeof event.description !== undefined) { %>
+  <p class="results-description">
+    <%= event.description %>
+  </p>
+  <% } %>
+
+  <div>
+    <% event.wikipedia.forEach((article) => { %>
+    <a href=<%= article.wikipedia %>>
+      <p><%= article.title %></p>
+    </a>
+    <% }) %>
+  </div>
+
+  <% }) %>
+</div>
