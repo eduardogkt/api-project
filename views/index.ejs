@@ -14,9 +14,9 @@
       <form method="post" action="/search" class="form row-auto justify-content-space-between">
         <div class="query">
           <div class="form-date">
-            <input type="number" name="month" required min="1" max="12" placeholder="month" class="date" id="month" value=<%= query.month %> />
+            <input type="number" name="month" required min="1" max="12" placeholder="month" class="date" id="month" value=<%= locals.qurery ? query.month : "" %> />
             <span>/</span>
-            <input type="number" name="day" required min="1" max="31" placeholder="day" class="date" id="day" value=<%= query.day %> />
+            <input type="number" name="day" required min="1" max="31" placeholder="day" class="date" id="day" value=<%= locals.query ? query.day : "" %> />
           </div>
           <input type="submit" value="search" class="form-btn" />
         </div>
@@ -24,16 +24,27 @@
         <div class="filters">
           <div class="filter">
             <select name="sort" class="form-select">
+              <% if (locals.filters) { %>
               <option value="oldest" <%= filters.sort === "oldest" ? "selected" : "" %>>Sort by Oldest</option>
               <option value="newest" <%= filters.sort === "newest" ? "selected" : "" %>>Sort by Newest</option>
+              <% } else { %>
+              <option value="oldest">Sort by Oldest</option>
+              <option value="newest">Sort by Newest</option>
+              <% } %>
             </select>
           </div>
 
           <div class="filter">
             <select name="type" class="form-select">
-              <option value="events" <%= filters.type === "events" ? "selected" : "" %>>Search for Events</option>
-              <option value="births" <%= filters.type === "births" ? "selected" : "" %>>Search for Births</option>
-              <option value="deaths" <%= filters.type === "deaths" ? "selected" : "" %>>Search for Deaths</option>
+              <% if (locals.filters) { %>
+              <option value="events" <%= locals.filters.type === "events" ? "selected" : "" %>>Search for Events</option>
+              <option value="births" <%= locals.filters.type === "births" ? "selected" : "" %>>Search for Births</option>
+              <option value="deaths" <%= locals.filters.type === "deaths" ? "selected" : "" %>>Search for Deaths</option>
+              <% } else { %>
+              <option value="events">Search for Events</option>
+              <option value="births">Search for Births</option>
+              <option value="deaths">Search for Deaths</option>
+              <% } %>
             </select>
           </div>
         </div>
